@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brujo Mayor de Catemaco – El Unicornio Negro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #d4af37;
+    --gold-light: #f0d060;
+    --gold-dark: #9a7d20;
+    --red: #c0141a;
+    --red-dark: #7a0a0d;
+    --green: #1e5c0a;
+    --green-light: #2d8a10;
+    --bg: #080808;
+    --bg2: #0f0f0f;
+    --bg3: #161616;
+    --text: #f0ece0;
+    --text-muted: #9a9080;
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem; height: 68px;
+    background: rgba(8,8,8,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212,175,55,0.18);
+    transition: background 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-muted);
+    font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #000 !important;
+    padding: 0.45rem 1.2rem;
+    border-radius: 4px;
+    font-weight: 700;
+    color: #000;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 7rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(192,20,26,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 80%, rgba(30,92,10,0.08) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 10% 90%, rgba(212,175,55,0.06) 0%, transparent 50%);
+  }
+  .hero-particles {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .particle {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: var(--gold);
+    border-radius: 50%;
+    opacity: 0;
+    animation: float-particle linear infinite;
+  }
+  @keyframes float-particle {
+    0% { opacity: 0; transform: translateY(0) scale(0); }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.3; }
+    100% { opacity: 0; transform: translateY(-100vh) scale(1.5); }
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 3rem; max-width: 1100px; width: 100%;
+  }
+
+  /* ── INSTAGRAM CARD ── */
+  .ig-card {
+    background: linear-gradient(145deg, #141414, #0c0c0c);
+    border: 1px solid rgba(212,175,55,0.25);
+    border-radius: 20px;
+    padding: 2.2rem;
+    width: 100%; max-width: 520px;
+    box-shadow:
+      0 0 0 1px rgba(212,175,55,0.08),
+      0 20px 60px rgba(0,0,0,0.7),
+      0 0 80px rgba(192,20,26,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .ig-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--red), var(--gold), transparent);
+  }
+
+  .ig-card-header {
+    display: flex; align-items: center; gap: 1.5rem;
+    margin-bottom: 1.4rem;
+  }
+
+  /* Profile ring animation */
+  .profile-ring-wrap {
+    position: relative; flex-shrink: 0;
+    width: 82px; height: 82px;
+  }
+  .profile-ring {
+    position: absolute; inset: -3px;
+    border-radius: 50%;
+    background: conic-gradient(
+      var(--gold) 0deg,
+      var(--red) 90deg,
+      #7b0e75 180deg,
+      var(--gold-light) 270deg,
+      var(--gold) 360deg
+    );
+    animation: spin-ring 4s linear infinite;
+  }
+  @keyframes spin-ring {
+    to { transform: rotate(360deg); }
+  }
+  .profile-ring::after {
+    content: '';
+    position: absolute; inset: 3px;
+    background: #141414;
+    border-radius: 50%;
+  }
+  .profile-pic {
+    position: relative; z-index: 1;
+    width: 82px; height: 82px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+  .profile-pic-placeholder {
+    position: relative; z-index: 1;
+    width: 82px; height: 82px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--red-dark), var(--green));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+  }
+
+  .ig-card-info { flex: 1; min-width: 0; }
+  .ig-name-row {
+    display: flex; align-items: center; gap: 0.5rem;
+    margin-bottom: 0.2rem;
+  }
+  .ig-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem; font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+  }
+  .verified-badge {
+    width: 20px; height: 20px;
+    background: linear-gradient(135deg, #1877f2, #0a5dc2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(24,119,242,0.4);
+    flex-shrink: 0;
+  }
+  .verified-badge svg { width: 11px; height: 11px; }
+  .ig-handle {
+    color: #3d9df3;
+    font-size: 0.82rem;
+    text-decoration: none;
+    display: block; margin-bottom: 0.25rem;
+  }
+  .ig-handle:hover { text-decoration: underline; }
+  .ig-category {
+    font-size: 0.75rem; color: var(--text-muted);
+  }
+
+  .ig-stats {
+    display: flex; gap: 0; margin-bottom: 1.2rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 0.8rem 0;
+  }
+  .ig-stat {
+    flex: 1; text-align: center;
+  }
+  .ig-stat + .ig-stat {
+    border-left: 1px solid rgba(255,255,255,0.06);
+  }
+  .ig-stat-num {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--white);
+    display: block;
+  }
+  .ig-stat-label {
+    font-size: 0.7rem; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  .ig-bio {
+    font-size: 0.85rem; line-height: 1.55;
+    color: #ccc;
+    margin-bottom: 1.2rem;
+  }
+
+  .ig-buttons {
+    display: flex; gap: 0.6rem; margin-bottom: 1.4rem;
+  }
+  .ig-btn {
+    flex: 1;
+    padding: 0.5rem 0.6rem;
+    border-radius: 8px;
+    font-size: 0.78rem; font-weight: 700;
+    text-align: center;
+    cursor: pointer; border: none;
+    text-decoration: none;
+    display: flex; align-items: center; justify-content: center; gap: 0.3rem;
+    transition: all 0.2s;
+  }
+  .ig-btn-primary {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #000;
+  }
+  .ig-btn-primary:hover { filter: brightness(1.15); transform: translateY(-1px); }
+  .ig-btn-secondary {
+    background: rgba(255,255,255,0.08);
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .ig-btn-secondary:hover { background: rgba(255,255,255,0.14); }
+  .ig-btn-ig {
+    background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: #fff;
+    flex: 0 0 auto; padding: 0.5rem 0.8rem;
+  }
+  .ig-btn-ig:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+  /* Mini grid */
+  .ig-mini-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 3px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .ig-mini-grid img {
+    width: 100%; aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+    transition: filter 0.2s;
+  }
+  .ig-mini-grid img:hover { filter: brightness(1.2); }
+
+  /* Hero mission */
+  .hero-mission {
+    text-align: center;
+    max-width: 680px;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(212,175,55,0.3);
+    padding: 0.35rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1.2rem;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--white) 0%, var(--gold-light) 50%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-subtitle {
+    font-size: 1.05rem; color: var(--text-muted);
+    line-height: 1.7; margin-bottom: 1.8rem;
+  }
+  .hero-community {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    background: rgba(212,175,55,0.08);
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: 50px;
+    padding: 0.6rem 1.5rem;
+  }
+  .hero-community-num {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem; font-weight: 700;
+    color: var(--gold);
+  }
+  .hero-community-label {
+    font-size: 0.8rem; color: var(--text-muted);
+    text-align: left; line-height: 1.3;
+  }
+
+  /* ── SECTIONS COMMON ── */
+  section { padding: 5rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--white);
+  }
+  .section-line {
+    width: 50px; height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--red));
+    margin-bottom: 1.5rem;
+  }
+  .section-desc {
+    font-size: 1rem; color: var(--text-muted); line-height: 1.7;
+    max-width: 580px;
+  }
+
+  /* reveal animation */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .stagger > * { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .stagger.visible > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0s; }
+  .stagger.visible > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.1s; }
+  .stagger.visible > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+  .stagger.visible > *:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
+  .stagger.visible > *:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
+  .stagger.visible > *:nth-child(6) { opacity: 1; transform: translateY(0); transition-delay: 0.5s; }
+
+  /* ── SOBRE MÍ ── */
+  #sobre {
+    background: var(--bg2);
+    position: relative;
+    overflow: hidden;
+  }
+  #sobre::before {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 500px; height: 500px;
+    background: radial-gradient(ellipse, rgba(192,20,26,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .sobre-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .sobre-text p {
+    font-size: 1rem; line-height: 1.8; color: #c0b898;
+    margin-bottom: 1.2rem;
+  }
+  .sobre-tags {
+    display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem;
+  }
+  .tag {
+    font-size: 0.75rem; letter-spacing: 0.08em;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    border: 1px solid;
+  }
+  .tag-gold { border-color: rgba(212,175,55,0.4); color: var(--gold); background: rgba(212,175,55,0.05); }
+  .tag-red { border-color: rgba(192,20,26,0.4); color: #e05050; background: rgba(192,20,26,0.05); }
+  .tag-green { border-color: rgba(45,138,16,0.4); color: #5eb84d; background: rgba(45,138,16,0.05); }
+
+  .sobre-photos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .sobre-photo {
+    border-radius: 10px; overflow: hidden;
+    aspect-ratio: 1; position: relative;
+  }
+  .sobre-photo:first-child {
+    grid-column: span 2;
+    aspect-ratio: 16/9;
+  }
+  .sobre-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .sobre-photo:hover img { transform: scale(1.05); }
+  .sobre-photo::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+    pointer-events: none;
+  }
+
+  /* ── SERVICIOS ── */
+  #servicios {
+    background: var(--bg);
+    position: relative;
+  }
+  #servicios::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0;
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(30,92,10,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .servicios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .servicio-card {
+    background: linear-gradient(145deg, #131313, #0e0e0e);
+    border: 1px solid rgba(212,175,55,0.12);
+    border-radius: 16px;
+    padding: 2rem 1.8rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+  .servicio-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--red));
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  .servicio-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(212,175,55,0.3);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(212,175,55,0.06);
+  }
+  .servicio-card:hover::before { transform: scaleX(1); }
+  .servicio-icon {
+    font-size: 2.4rem; margin-bottom: 1rem;
+    display: block;
+  }
+  .servicio-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--white); margin-bottom: 0.6rem;
+  }
+  .servicio-desc {
+    font-size: 0.88rem; color: var(--text-muted);
+    line-height: 1.65;
+  }
+  .servicio-cta {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    margin-top: 1.2rem;
+    font-size: 0.8rem; font-weight: 700;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: gap 0.2s;
+  }
+  .servicio-cta:hover { gap: 0.7rem; }
+
+  /* ── GALERÍA / FEED ── */
+  #galeria {
+    background: var(--bg2);
+  }
+
+  /* Feed estilo Instagram */
+  .ig-feed {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    margin-top: 3rem;
+    max-width: 935px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .ig-post {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    cursor: pointer;
+    background: #111;
+  }
+  .ig-post img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease;
+  }
+  .ig-post:hover img { transform: scale(1.06); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.8rem 2rem;
+    border: 1px solid rgba(212,175,55,0.4);
+    border-radius: 8px;
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 0.88rem; font-weight: 700;
+    letter-spacing: 0.06em;
+    transition: all 0.3s;
+  }
+  .btn-outline:hover {
+    background: rgba(212,175,55,0.08);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  /* ── MÉTRICAS ── */
+  #metricas {
+    background: linear-gradient(135deg, #0a0a0a 0%, #0f0a00 50%, #0a0a0a 100%);
+    border-top: 1px solid rgba(212,175,55,0.1);
+    border-bottom: 1px solid rgba(212,175,55,0.1);
+  }
+  .metricas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem;
+    text-align: center;
+  }
+  .metrica-num {
+    font-family: 'Cinzel', serif;
+    font-size: 2.8rem; font-weight: 900;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block; line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .metrica-label {
+    font-size: 0.8rem; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.12em;
+  }
+  .metrica-sep {
+    width: 1px; background: rgba(212,175,55,0.15);
+  }
+
+  /* ── CONTACTO ── */
+  #contacto {
+    background: var(--bg);
+    position: relative; overflow: hidden;
+  }
+  #contacto::before {
+    content: '';
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 700px; height: 700px;
+    background: radial-gradient(ellipse, rgba(192,20,26,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .contacto-inner {
+    max-width: 640px; margin: 0 auto; text-align: center;
+    position: relative; z-index: 1;
+  }
+  .contacto-inner .section-line { margin: 1rem auto 2rem; }
+  .contacto-desc {
+    font-size: 1rem; color: var(--text-muted); line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+  .contacto-btns {
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+  }
+  .btn-whatsapp {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    background: #25d366;
+    color: #fff;
+    padding: 1rem 2.4rem;
+    border-radius: 50px;
+    font-size: 1rem; font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.3);
+    transition: all 0.3s;
+    letter-spacing: 0.02em;
+  }
+  .btn-whatsapp:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(37,211,102,0.45);
+    filter: brightness(1.08);
+  }
+  .btn-ig-full {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: #fff;
+    padding: 0.85rem 2rem;
+    border-radius: 50px;
+    font-size: 0.9rem; font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .btn-ig-full:hover { transform: translateY(-3px); filter: brightness(1.1); }
+
+  .redes-row {
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    margin-top: 2rem; flex-wrap: wrap;
+  }
+  .red-link {
+    display: flex; align-items: center; gap: 0.5rem;
+    color: var(--text-muted); text-decoration: none;
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 50px;
+    transition: all 0.2s;
+  }
+  .red-link:hover { color: var(--text); border-color: rgba(212,175,55,0.3); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #050505;
+    border-top: 1px solid rgba(212,175,55,0.1);
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+  footer .footer-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--gold);
+    display: block; margin-bottom: 0.6rem;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sobre-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .galeria-grid { grid-template-columns: repeat(3, 1fr); }
+    .galeria-item:nth-child(5) { grid-column: span 1; grid-row: span 1; }
+  }
+  @media (max-width: 640px) {
+    nav { padding: 0 1.2rem; }
+    .nav-links { display: none; }
+    .hero-content { gap: 2rem; }
+    .ig-card { padding: 1.6rem; }
+    .ig-card-header { gap: 1rem; }
+    .ig-mini-grid { grid-template-columns: repeat(3, 1fr); }
+    .galeria-grid { grid-template-columns: repeat(2, 1fr); }
+    .galeria-item:nth-child(5) { grid-column: span 2; grid-row: span 1; }
+    .metricas-grid { grid-template-columns: repeat(2, 1fr); }
+    .servicio-card { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Brujo Mayor de Catemaco</span>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre mí</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#contacto" class="nav-cta">Contactar</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-particles" id="particles"></div>
+
+  <div class="hero-content">
+
+    <!-- Instagram Card -->
+    <div class="ig-card reveal">
+      <div class="ig-card-header">
+        <div class="profile-ring-wrap">
+          <div class="profile-ring"></div>
+          <img src="assets/instagram/profile.jpg" alt="Brujo Mayor de Catemaco" class="profile-pic" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="profile-pic-placeholder" style="display:none">🔮</div>
+        </div>
+        <div class="ig-card-info">
+          <div class="ig-name-row">
+            <span class="ig-name">Brujo Mayor De Catemaco</span>
+            <div class="verified-badge">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <a href="https://www.instagram.com/brujomayordecatemaco/" target="_blank" class="ig-handle">@brujomayordecatemaco</a>
+          <span class="ig-category">🔮 Espiritualista &amp; Maestro de Artes Ocultas · Catemaco, Veracruz</span>
+        </div>
+      </div>
+
+      <div class="ig-stats">
+        <div class="ig-stat">
+          <span class="ig-stat-num">1,217</span>
+          <span class="ig-stat-label">publicaciones</span>
+        </div>
+        <div class="ig-stat">
+          <span class="ig-stat-num">465K</span>
+          <span class="ig-stat-label">seguidores</span>
+        </div>
+        <div class="ig-stat">
+          <span class="ig-stat-num">26</span>
+          <span class="ig-stat-label">seguidos</span>
+        </div>
+      </div>
+
+      <p class="ig-bio">
+        El Unicornio Negro. Maestro de las artes ocultas desde Catemaco, Veracruz — la tierra de la brujería.<br>
+        Rituales, limpias y consultas espirituales para quienes buscan cambiar su destino.
+      </p>
+
+      <div class="ig-buttons">
+        <a href="https://wa.me/522293236417" target="_blank" class="ig-btn ig-btn-primary">📲 Contactar</a>
+        <a href="#servicios" class="ig-btn ig-btn-secondary">✨ Servicios</a>
+        <a href="https://www.instagram.com/brujomayordecatemaco/" target="_blank" class="ig-btn ig-btn-ig">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          Seguir
+        </a>
+      </div>
+
+      <div class="ig-mini-grid">
+        <img src="assets/instagram/post-1.jpg" alt="Post" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><rect width=%2260%22 height=%2260%22 fill=%22%23111%22/></svg>'">
+        <img src="assets/instagram/post-2.jpg" alt="Post" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><rect width=%2260%22 height=%2260%22 fill=%22%23111%22/></svg>'">
+        <img src="assets/instagram/post-3.jpg" alt="Post" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><rect width=%2260%22 height=%2260%22 fill=%22%23111%22/></svg>'">
+        <img src="assets/instagram/post-4.jpg" alt="Post" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><rect width=%2260%22 height=%2260%22 fill=%22%23111%22/></svg>'">
+        <img src="assets/instagram/post-5.jpg" alt="Post" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><rect width=%2260%22 height=%2260%22 fill=%22%23111%22/></svg>'">
+        <img src="assets/instagram/post-6.jpg" alt="Post" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><rect width=%2260%22 height=%2260%22 fill=%22%23111%22/></svg>'">
+      </div>
+    </div>
+
+    <!-- Mission text -->
+    <div class="hero-mission reveal">
+      <span class="hero-tag">🔮 El Unicornio Negro · Catemaco, Veracruz</span>
+      <h1 class="hero-title">Maestro de las<br>Artes Ocultas</h1>
+      <p class="hero-subtitle">
+        Desde Catemaco, la capital mundial de la brujería, ofrezco rituales, limpias y consultas espirituales para quienes buscan transformar su destino con el poder de la tradición ancestral.
+      </p>
+      <div class="hero-community">
+        <span class="hero-community-num">+465K</span>
+        <span class="hero-community-label">seguidores<br>en Instagram</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SOBRE MÍ -->
+<section id="sobre">
+  <div class="container">
+    <div class="sobre-grid">
+      <div class="sobre-text reveal">
+        <p class="section-tag">Sobre mí</p>
+        <h2 class="section-title">El Unicornio Negro de Catemaco</h2>
+        <div class="section-line"></div>
+        <p>Soy el <strong>Brujo Mayor de Catemaco</strong>, conocido como "El Unicornio Negro". Originario de Catemaco, Veracruz — una de las tierras con mayor energía espiritual del mundo — llevo años practicando y preservando las artes ocultas de nuestra tradición ancestral.</p>
+        <p>Mi camino en el mundo espiritual comenzó desde muy joven, guiado por la energía única que emana de la Sierra de Los Tuxtlas. Hoy cuento con más de <strong>465 mil personas</strong> que me siguen y confían en mi guía para transformar sus vidas a través de rituales, limpias y consultas.</p>
+        <p>Mi misión es clara: acompañar a quienes buscan un cambio real, usando el poder de las tradiciones que han dado forma a nuestra cultura por generaciones. Si estás aquí es porque el destino te trajo.</p>
+        <div class="sobre-tags stagger">
+          <span class="tag tag-gold">🔮 Espiritualismo</span>
+          <span class="tag tag-red">🕯️ Rituales</span>
+          <span class="tag tag-green">🌿 Medicina ancestral</span>
+          <span class="tag tag-gold">⭐ Magia tradicional</span>
+          <span class="tag tag-red">🌙 Artes ocultas</span>
+          <span class="tag tag-green">🦄 Unicornio Negro</span>
+        </div>
+      </div>
+      <div class="sobre-photos stagger">
+        <div class="sobre-photo">
+          <img src="assets/instagram/post-7.jpg" alt="Brujo Mayor de Catemaco" onerror="this.parentElement.style.background='#161616'">
+        </div>
+        <div class="sobre-photo">
+          <img src="assets/instagram/post-8.jpg" alt="Ritual" onerror="this.parentElement.style.background='#161616'">
+        </div>
+        <div class="sobre-photo">
+          <img src="assets/instagram/post-9.jpg" alt="Magia" onerror="this.parentElement.style.background='#161616'">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-tag">Lo que hago</p>
+      <h2 class="section-title">Servicios Espirituales</h2>
+      <div class="section-line"></div>
+      <p class="section-desc">Cada persona llega con una necesidad diferente. Escucho tu situación y juntos encontramos el camino que tu vida necesita.</p>
+    </div>
+    <div class="servicios-grid stagger">
+
+      <div class="servicio-card">
+        <span class="servicio-icon">🌿</span>
+        <div class="servicio-name">Limpias Espirituales</div>
+        <p class="servicio-desc">Libérate de energías negativas, envidias y bloqueos que frenan tu vida. Una limpia profunda para restaurar tu equilibrio y atraer lo que mereces.</p>
+        <a href="https://wa.me/522293236417?text=Hola,%20quiero%20información%20sobre%20limpias%20espirituales" target="_blank" class="servicio-cta">Consultar →</a>
+      </div>
+
+      <div class="servicio-card">
+        <span class="servicio-icon">🕯️</span>
+        <div class="servicio-name">Rituales</div>
+        <p class="servicio-desc">Rituales ancestrales de la tradición de Catemaco para abrir caminos, atraer prosperidad, protección y suerte en todos los ámbitos de tu vida.</p>
+        <a href="https://wa.me/522293236417?text=Hola,%20quiero%20información%20sobre%20rituales" target="_blank" class="servicio-cta">Consultar →</a>
+      </div>
+
+      <div class="servicio-card">
+        <span class="servicio-icon">❤️‍🔥</span>
+        <div class="servicio-name">Amarres</div>
+        <p class="servicio-desc">Trabajos de amor para unir, recuperar o fortalecer una relación. Con la fuerza de los rituales tradicionales de Catemaco para restablecer el vínculo.</p>
+        <a href="https://wa.me/522293236417?text=Hola,%20quiero%20información%20sobre%20amarres" target="_blank" class="servicio-cta">Consultar →</a>
+      </div>
+
+      <div class="servicio-card">
+        <span class="servicio-icon">🔮</span>
+        <div class="servicio-name">Consultas Espirituales</div>
+        <p class="servicio-desc">Una conversación directa donde analizamos tu situación y te oriento sobre el camino a seguir. Sin juicios, con honestidad y con el conocimiento de la tradición.</p>
+        <a href="https://wa.me/522293236417?text=Hola,%20quiero%20una%20consulta%20espiritual" target="_blank" class="servicio-cta">Consultar →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA / FEED INSTAGRAM -->
+<section id="galeria">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-tag">Instagram · @brujomayordecatemaco</p>
+      <h2 class="section-title">Publicaciones Recientes</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="ig-feed">
+      <div class="ig-post"><img src="assets/instagram/post-1.jpg" alt="Post"></div>
+      <div class="ig-post"><img src="assets/instagram/post-2.jpg" alt="Post"></div>
+      <div class="ig-post"><img src="assets/instagram/post-3.jpg" alt="Post"></div>
+      <div class="ig-post"><img src="assets/instagram/post-4.jpg" alt="Post"></div>
+      <div class="ig-post"><img src="assets/instagram/post-5.jpg" alt="Post"></div>
+      <div class="ig-post"><img src="assets/instagram/post-6.jpg" alt="Post"></div>
+      <div class="ig-post"><img src="assets/instagram/post-7.jpg" alt="Post"></div>
+      <div class="ig-post"><img src="assets/instagram/post-8.jpg" alt="Post"></div>
+      <div class="ig-post"><img src="assets/instagram/post-9.jpg" alt="Post"></div>
+      <div class="ig-post"><img src="assets/instagram/post-10.jpg" alt="Post"></div>
+      <div class="ig-post"><img src="assets/instagram/post-11.jpg" alt="Post"></div>
+      <div class="ig-post"><img src="assets/instagram/post-12.jpg" alt="Post"></div>
+    </div>
+  </div>
+</section>
+
+<!-- MÉTRICAS -->
+<section id="metricas">
+  <div class="container">
+    <div class="metricas-grid stagger">
+      <div>
+        <span class="metrica-num" data-target="465">0</span><span style="font-family:Cinzel,serif;font-size:1.8rem;color:#d4af37">K</span>
+        <span class="metrica-label">Seguidores en Instagram</span>
+      </div>
+      <div>
+        <span class="metrica-num" data-target="1217">0</span>
+        <span class="metrica-label">Publicaciones</span>
+      </div>
+      <div>
+        <span class="metrica-num" data-target="15">0</span><span style="font-family:Cinzel,serif;font-size:1.8rem;color:#d4af37">+</span>
+        <span class="metrica-label">Años de experiencia</span>
+      </div>
+      <div>
+        <span class="metrica-num" data-target="100">0</span><span style="font-family:Cinzel,serif;font-size:1.8rem;color:#d4af37">%</span>
+        <span class="metrica-label">Dedicación espiritual</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="container">
+    <div class="contacto-inner reveal">
+      <p class="section-tag">Empieza tu cambio</p>
+      <h2 class="section-title">¿Listo para transformar tu vida?</h2>
+      <div class="section-line"></div>
+      <p class="contacto-desc">
+        No importa cuál sea tu situación — amor, trabajo, salud, bloqueos energéticos — hay un camino. Escríbeme y cuéntame qué está pasando. El primer paso es tuyo.
+      </p>
+      <div class="contacto-btns">
+        <a href="https://wa.me/522293236417?text=Hola%20Brujo%20Mayor,%20quiero%20consultar%20contigo" target="_blank" class="btn-whatsapp">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Escribirme por WhatsApp
+        </a>
+        <a href="https://www.instagram.com/brujomayordecatemaco/" target="_blank" class="btn-ig-full">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          Seguirme en Instagram
+        </a>
+      </div>
+
+      <div class="redes-row">
+        <a href="https://www.instagram.com/brujomayordecatemaco/" target="_blank" class="red-link">
+          📸 Instagram
+        </a>
+        <a href="https://wa.me/522293236417" target="_blank" class="red-link">
+          💬 WhatsApp
+        </a>
+        <a href="https://www.facebook.com/UnicornioNegroElBrujoMayordeCatemaco/" target="_blank" class="red-link">
+          👤 Facebook
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Brujo Mayor De Catemaco</span>
+  <p>El Unicornio Negro · Catemaco, Veracruz, México</p>
+  <p style="margin-top:0.4rem">© 2026 · @brujomayordecatemaco</p>
+</footer>
+
+<script>
+  // Particles
+  const particlesEl = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = Math.random() * 100 + '%';
+    p.style.animationDuration = (8 + Math.random() * 12) + 's';
+    p.style.animationDelay = (Math.random() * 10) + 's';
+    p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
+    particlesEl.appendChild(p);
+  }
+
+  // Intersection Observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Counter animation
+        entry.target.querySelectorAll('[data-target]').forEach(counter => {
+          const target = +counter.getAttribute('data-target');
+          const duration = 1800;
+          const step = target / (duration / 16);
+          let current = 0;
+          const timer = setInterval(() => {
+            current = Math.min(current + step, target);
+            counter.textContent = Math.floor(current).toLocaleString('es-MX');
+            if (current >= target) clearInterval(timer);
+          }, 16);
+        });
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal, .stagger, #metricas').forEach(el => observer.observe(el));
+
+  // Parallax on hero bg
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const heroBg = document.querySelector('.hero-bg');
+    if (heroBg) heroBg.style.transform = `translateY(${scrollY * 0.3}px)`;
+  }, { passive: true });
+
+  // Nav background on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 50
+      ? 'rgba(8,8,8,0.97)'
+      : 'rgba(8,8,8,0.85)';
+  }, { passive: true });
+</script>
+</body>
+</html>
