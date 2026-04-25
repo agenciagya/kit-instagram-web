@@ -25,13 +25,18 @@
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    max-width: 100%;
+  }
 
   body {
     font-family: 'Lato', sans-serif;
     background: var(--bg);
     color: var(--text);
     overflow-x: hidden;
+    max-width: 100%;
   }
 
   /* Scrollbar */
@@ -434,6 +439,7 @@
   #servicios {
     background: var(--bg);
     position: relative;
+    overflow: hidden;
   }
   #servicios::before {
     content: '';
@@ -657,20 +663,57 @@
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     .sobre-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .galeria-grid { grid-template-columns: repeat(3, 1fr); }
-    .galeria-item:nth-child(5) { grid-column: span 1; grid-row: span 1; }
   }
   @media (max-width: 640px) {
-    nav { padding: 0 1.2rem; }
+    /* Contención global */
+    html, body { overflow-x: hidden; max-width: 100%; }
+    *, *::before, *::after { max-width: 100%; }
+
+    /* Secciones */
+    section { padding: 3.5rem 1rem; overflow-x: hidden; }
+    .container { width: 100%; padding-left: 1rem; padding-right: 1rem; }
+
+    /* Nav */
+    nav { padding: 0 1rem; width: 100%; left: 0; right: 0; }
     .nav-links { display: none; }
-    .hero-content { gap: 2rem; }
-    .ig-card { padding: 1.6rem; }
-    .ig-card-header { gap: 1rem; }
+
+    /* Hero */
+    #hero { padding: 5rem 1rem 3rem; overflow: hidden; }
+    .hero-content { width: 100%; max-width: 100%; gap: 1.8rem; padding: 0; }
+    .hero-mission { width: 100%; max-width: 100%; padding: 0; }
+    .hero-community { flex-direction: column; gap: 0.3rem; text-align: center; padding: 0.7rem 1rem; max-width: 100%; }
+    .hero-community-label { text-align: center; }
+
+    /* Tarjeta Instagram */
+    .ig-card { width: 100%; max-width: 94vw; padding: 1.1rem; margin: 0 auto; }
+    .ig-card-header { gap: 0.8rem; }
+    .ig-name { font-size: 0.9rem; }
+    .ig-category { font-size: 0.7rem; }
+    .ig-buttons { flex-wrap: wrap; gap: 0.4rem; }
+    .ig-btn { font-size: 0.74rem; padding: 0.4rem 0.5rem; }
     .ig-mini-grid { grid-template-columns: repeat(3, 1fr); }
-    .galeria-grid { grid-template-columns: repeat(2, 1fr); }
-    .galeria-item:nth-child(5) { grid-column: span 2; grid-row: span 1; }
-    .metricas-grid { grid-template-columns: repeat(2, 1fr); }
-    .servicio-card { padding: 1.5rem; }
+
+    /* Sobre mí */
+    .sobre-photos { grid-template-columns: 1fr; }
+    .sobre-photo:first-child { aspect-ratio: 4/3; }
+
+    /* Servicios */
+    .servicios-grid { grid-template-columns: 1fr; }
+    .servicio-card { padding: 1.4rem; }
+
+    /* Galería */
+    .ig-feed { grid-template-columns: repeat(2, 1fr); width: 100%; max-width: 100%; }
+
+    /* Métricas */
+    .metricas-grid { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+    .metrica-num { font-size: 2rem; }
+
+    /* Contacto */
+    .contacto-inner { width: 100%; max-width: 100%; padding: 0; }
+    .btn-whatsapp { width: 100%; justify-content: center; box-sizing: border-box; }
+    .btn-ig-full { width: 100%; justify-content: center; box-sizing: border-box; }
+    .redes-row { gap: 0.5rem; }
+    .red-link { font-size: 0.8rem; padding: 0.4rem 0.8rem; }
   }
 </style>
 </head>
