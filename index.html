@@ -1110,16 +1110,54 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }, { passive: true });
 </script>
 
-<!-- Meta Pixel: Lead event on WhatsApp clicks -->
+<!-- Meta Pixel: WhatsApp Lead tracking (single fire) -->
 <script>
+(function () {
+  // Wrap fbq to block duplicate Lead events within 3000ms
+  var _fbqOriginal = null;
+  var _leadLock = false;
+
+  function installFbqGuard() {
+    if (typeof fbq === 'undefined' || fbq.__waGuarded) return;
+    _fbqOriginal = fbq;
+    var guarded = function () {
+      var args = Array.prototype.slice.call(arguments);
+      if (args[0] === 'track' && (args[1] === 'Lead' || args[1] === 'lead')) {
+        if (_leadLock) return;
+        _leadLock = true;
+        setTimeout(function () { _leadLock = false; }, 3000);
+      }
+      _fbqOriginal.apply(this, args);
+      guarded.callMethod = _fbqOriginal.callMethod;
+      guarded.queue = _fbqOriginal.queue;
+    };
+    guarded.__waGuarded = true;
+    guarded.callMethod = _fbqOriginal.callMethod;
+    guarded.queue = _fbqOriginal.queue;
+    window.fbq = guarded;
+  }
+
+  // Install guard as soon as fbq is available
+  if (typeof fbq !== 'undefined') {
+    installFbqGuard();
+  } else {
+    var pollGuard = setInterval(function () {
+      if (typeof fbq !== 'undefined') { installFbqGuard(); clearInterval(pollGuard); }
+    }, 100);
+  }
+
+  // Single delegated listener for WhatsApp link clicks
+  window.__waLeadTrackingLock = false;
   document.addEventListener('click', function (e) {
-    var link = e.target.closest('a[href*="wa.me"], a[href*="api.whatsapp.com"]');
+    var link = e.target.closest('a[href*="wa.me"], a[href*="api.whatsapp.com"], a[href*="whatsapp"]');
     if (!link) return;
     if (window.__waLeadTrackingLock) return;
+    if (typeof fbq === 'undefined') return;
     window.__waLeadTrackingLock = true;
-    setTimeout(function () { window.__waLeadTrackingLock = false; }, 1000);
-    if (typeof fbq !== 'undefined') { fbq('track', 'Lead'); }
-  });
+    setTimeout(function () { window.__waLeadTrackingLock = false; }, 3000);
+    fbq('track', 'Lead');
+  }, true); // capture phase to run before any other listener
+}());
 </script>
 
 <!-- Botón flotante WhatsApp -->
