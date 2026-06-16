@@ -1110,6 +1110,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }, { passive: true });
 </script>
 
+<!-- Meta Pixel: Lead event on WhatsApp clicks -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('a[href*="wa.me"]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        if (typeof fbq !== 'undefined') { fbq('track', 'Lead'); }
+      });
+    });
+  });
+</script>
+
 <!-- Botón flotante WhatsApp -->
 <a href="https://wa.me/522293236417"
    target="_blank"
