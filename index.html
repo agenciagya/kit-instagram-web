@@ -502,17 +502,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     font-size: 0.88rem; color: var(--text-muted);
     line-height: 1.65;
   }
-  .servicio-cta {
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    margin-top: 1.2rem;
-    font-size: 0.8rem; font-weight: 700;
-    color: var(--gold);
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    transition: gap 0.2s;
-  }
-  .servicio-cta:hover { gap: 0.7rem; }
-
   /* ── GALERÍA / FEED ── */
   #galeria {
     background: var(--bg2);
@@ -542,22 +531,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     transition: transform 0.35s ease;
   }
   .ig-post:hover img { transform: scale(1.06); }
-  .btn-outline {
-    display: inline-flex; align-items: center; gap: 0.6rem;
-    padding: 0.8rem 2rem;
-    border: 1px solid rgba(212,175,55,0.4);
-    border-radius: 8px;
-    color: var(--gold);
-    text-decoration: none;
-    font-size: 0.88rem; font-weight: 700;
-    letter-spacing: 0.06em;
-    transition: all 0.3s;
-  }
-  .btn-outline:hover {
-    background: rgba(212,175,55,0.08);
-    border-color: var(--gold);
-    transform: translateY(-2px);
-  }
 
   /* ── MÉTRICAS ── */
   #metricas {
@@ -583,9 +556,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .metrica-label {
     font-size: 0.8rem; color: var(--text-muted);
     text-transform: uppercase; letter-spacing: 0.12em;
-  }
-  .metrica-sep {
-    width: 1px; background: rgba(212,175,55,0.15);
   }
 
   /* ── CONTACTO ── */
@@ -629,18 +599,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     box-shadow: 0 8px 30px rgba(37,211,102,0.45);
     filter: brightness(1.08);
   }
-  .btn-ig-full {
-    display: inline-flex; align-items: center; gap: 0.7rem;
-    background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-    color: #fff;
-    padding: 0.85rem 2rem;
-    border-radius: 50px;
-    font-size: 0.9rem; font-weight: 700;
-    text-decoration: none;
-    transition: all 0.3s;
-  }
-  .btn-ig-full:hover { transform: translateY(-3px); filter: brightness(1.1); }
-
   .redes-row {
     display: flex; align-items: center; justify-content: center; gap: 1rem;
     margin-top: 2rem; flex-wrap: wrap;
@@ -724,7 +682,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     /* Contacto */
     .contacto-inner { width: 100%; max-width: 100%; padding: 0; }
     .btn-whatsapp { width: 100%; justify-content: center; box-sizing: border-box; }
-    .btn-ig-full { width: 100%; justify-content: center; box-sizing: border-box; }
     .redes-row { gap: 0.5rem; }
     .red-link { font-size: 0.8rem; padding: 0.4rem 0.8rem; }
   }
@@ -916,13 +873,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <div class="sobre-photos stagger">
         <div class="sobre-photo">
-          <img src="assets/instagram/post-7.jpg" alt="Brujo Mayor de Catemaco" onerror="this.parentElement.style.background='#161616'">
+          <img src="assets/instagram/post-7.jpg" alt="Brujo Mayor de Catemaco" loading="lazy" onerror="this.parentElement.style.background='#161616'">
         </div>
         <div class="sobre-photo">
-          <img src="assets/instagram/post-8.jpg" alt="Ritual" onerror="this.parentElement.style.background='#161616'">
+          <img src="assets/instagram/post-8.jpg" alt="Ritual" loading="lazy" onerror="this.parentElement.style.background='#161616'">
         </div>
         <div class="sobre-photo">
-          <img src="assets/instagram/post-9.jpg" alt="Magia" onerror="this.parentElement.style.background='#161616'">
+          <img src="assets/instagram/post-9.jpg" alt="Magia" loading="lazy" onerror="this.parentElement.style.background='#161616'">
         </div>
       </div>
     </div>
@@ -978,18 +935,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div class="ig-feed">
-      <div class="ig-post"><img src="assets/instagram/post-1.jpg" alt="Post"></div>
-      <div class="ig-post"><img src="assets/instagram/post-2.jpg" alt="Post"></div>
-      <div class="ig-post"><img src="assets/instagram/post-3.jpg" alt="Post"></div>
-      <div class="ig-post"><img src="assets/instagram/post-4.jpg" alt="Post"></div>
-      <div class="ig-post"><img src="assets/instagram/post-5.jpg" alt="Post"></div>
-      <div class="ig-post"><img src="assets/instagram/post-6.jpg" alt="Post"></div>
-      <div class="ig-post"><img src="assets/instagram/post-7.jpg" alt="Post"></div>
-      <div class="ig-post"><img src="assets/instagram/post-8.jpg" alt="Post"></div>
-      <div class="ig-post"><img src="assets/instagram/post-9.jpg" alt="Post"></div>
-      <div class="ig-post"><img src="assets/instagram/post-10.jpg" alt="Post"></div>
-      <div class="ig-post"><img src="assets/instagram/post-11.jpg" alt="Post"></div>
-      <div class="ig-post"><img src="assets/instagram/post-12.jpg" alt="Post"></div>
+      <div class="ig-post"><img src="assets/instagram/post-1.jpg" alt="Post" loading="lazy"></div>
+      <div class="ig-post"><img src="assets/instagram/post-2.jpg" alt="Post" loading="lazy"></div>
+      <div class="ig-post"><img src="assets/instagram/post-3.jpg" alt="Post" loading="lazy"></div>
+      <div class="ig-post"><img src="assets/instagram/post-4.jpg" alt="Post" loading="lazy"></div>
+      <div class="ig-post"><img src="assets/instagram/post-5.jpg" alt="Post" loading="lazy"></div>
+      <div class="ig-post"><img src="assets/instagram/post-6.jpg" alt="Post" loading="lazy"></div>
+      <div class="ig-post"><img src="assets/instagram/post-7.jpg" alt="Post" loading="lazy"></div>
+      <div class="ig-post"><img src="assets/instagram/post-8.jpg" alt="Post" loading="lazy"></div>
+      <div class="ig-post"><img src="assets/instagram/post-9.jpg" alt="Post" loading="lazy"></div>
+      <div class="ig-post"><img src="assets/instagram/post-10.jpg" alt="Post" loading="lazy"></div>
+      <div class="ig-post"><img src="assets/instagram/post-11.jpg" alt="Post" loading="lazy"></div>
+      <div class="ig-post"><img src="assets/instagram/post-12.jpg" alt="Post" loading="lazy"></div>
     </div>
   </div>
 </section>
