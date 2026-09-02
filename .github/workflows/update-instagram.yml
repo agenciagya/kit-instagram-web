@@ -2,7 +2,7 @@ name: Actualizar publicaciones de Instagram
 
 on:
   schedule:
-    - cron: '0 10 * * *'   # Diario a las 10:00 UTC (12:00 hora México)
+    - cron: '0 11 * * *'   # Diario a las 11:00 UTC (6:00 a. m. Cancún, UTC-5)
   workflow_dispatch:         # Ejecución manual desde GitHub
 
 concurrency:
