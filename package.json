@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "update-instagram": "node update-instagram.js"
+  },
   "dependencies": {
     "playwright": "^1.59.1"
   }

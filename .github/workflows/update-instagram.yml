@@ -1,0 +1,53 @@
+name: Actualizar publicaciones de Instagram
+
+on:
+  schedule:
+    - cron: '0 10 * * *'   # Diario a las 10:00 UTC (12:00 hora México)
+  workflow_dispatch:         # Ejecución manual desde GitHub
+
+concurrency:
+  group: instagram-update
+  cancel-in-progress: false  # Si ya hay una corriendo, la nueva espera (no cancela)
+
+permissions:
+  contents: write            # Necesario para hacer commit y push
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Instalar Chromium para Playwright
+        run: npx playwright install chromium --with-deps
+
+      - name: Actualizar publicaciones de Instagram
+        run: npm run update-instagram
+
+      - name: Verificar si hubo cambios
+        id: changes
+        run: |
+          git diff --quiet -- 'assets/instagram/post-*.jpg' instagram-posts.json \
+            && echo "changed=false" >> $GITHUB_OUTPUT \
+            || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit y push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/instagram/post-*.jpg instagram-posts.json
+          git commit -m "actualizar últimas publicaciones de Instagram"
+          git push
