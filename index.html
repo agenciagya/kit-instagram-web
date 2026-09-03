@@ -64,6 +64,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     transition: background 0.3s;
   }
   .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
     font-family: 'Cinzel', serif;
     font-size: 1.1rem;
     font-weight: 700;
@@ -71,6 +74,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+  .nav-logo-img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #fff;
+    padding: 4px;
+    object-fit: contain;
+    flex-shrink: 0;
   }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a {
@@ -835,7 +847,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- NAV -->
 <nav>
-  <span class="nav-logo">El Unicornio Negro</span>
+  <span class="nav-logo"><img class="nav-logo-img" src="assets/favicon/favicon.png" alt="">El Unicornio Negro</span>
   <ul class="nav-links">
     <li><a href="#servicios">Servicios</a></li>
     <li><a href="#galeria">Galería</a></li>
